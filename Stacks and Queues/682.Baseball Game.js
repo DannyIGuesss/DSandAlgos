@@ -15,23 +15,39 @@
 // The test cases are generated such that the answer and all intermediate calculations fit in a 32-bit integer and that all operations are valid.
 
 var calPoints = function (operations) {
-    let arr = [];
+    //start with a new array
+    const record = [];
 
+    // loop through the operations array to check each element
     for (let i = 0; i < operations.length; i++) {
-        if (operations[i] == "+") {
-            arr.push(
-            parseFloat(arr[arr.length - 1]) + parseFloat(arr[arr.length - 2])
-            );
-        } else if (operations[i] == "D") {
-            arr.push(arr[arr.length - 1] * 2);
-        } else if (operations[i] == "C") {
-            arr.pop();
-        } else {
-            arr.push(parseFloat(operations[i]));
-        }
-    }
 
-    return arr.reduce((a, b) => {
-        return a + b;
-    }, 0);
+        const latestScore = record[record.length - 1]
+        const previousScore = record[record.length - 2]
+
+
+        //if statement if operations[i] is equal to '+' then sum two previous scores
+        if (operations[i] == '+') {
+            record.push(parseInt(latestScore) + parseInt(previousScore))
+        }
+        //if statement if operations[i] equals 'D' then multilply by 2 the previous score
+        else if (operations[i] == 'D') {
+            record.push(2 * latestScore)
+        }
+        //if statement if operations[i] equals 'C' then remove the previous score
+        else if (operations[i] == 'C') {
+            record.pop(latestScore)
+        }
+        // if statement if operations[i] is integer then push into record 
+        else {
+            record.push(operations[i]);
+        }
+        console.log(record)
+    }
+    // initiate a variable to hold the sum of all numbers in record
+    let sum = 0;
+    for (let i = 0; i < record.length; i++) {
+        //add with sum and make sure to convert any string number into integers with the Number function
+        sum += Number(record[i])
+    }
+    return sum
 };
